@@ -2,5 +2,5 @@
     $userName = "defaultUser";
     $password = "USER PASSWORD";
 
-    include "login.php";
+    require "login.php";
 ?>

@@ -1,3 +1,3 @@
 <?php
-echo 'Hello world';
+    include "utils/agDisplay.php";
 ?>

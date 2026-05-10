@@ -2,5 +2,5 @@
     $userName = "lehrer";
     $password = "LEHRER PASSWORD";
 
-    include "login.php";
+    require "login.php";
 ?>

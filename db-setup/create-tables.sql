@@ -59,6 +59,7 @@ CREATE TABLE Admin (
 
 CREATE USER defaultUser@localhost IDENTIFIED BY 'USER PASSWORD';
 GRANT SELECT ON Ag TO defaultUser@localhost;
+GRANT SELECT ON Lehrer TO defaultUser@localhost;
 GRANT SELECT, INSERT ON Schueler TO defaultUser@localhost;
 GRANT SELECT, INSERT ON Teilnahme TO defaultUser@localhost;
 
