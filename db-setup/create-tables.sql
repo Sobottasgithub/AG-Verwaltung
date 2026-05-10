@@ -1,5 +1,5 @@
-CREATE DATABASE AG-Verwaltung;
-USE AG-Verwaltung;
+CREATE DATABASE AG_Verwaltung;
+USE AG_Verwaltung;
 
 CREATE TABLE Klassen (
   Klasse varchar(3) PRIMARY KEY  
@@ -17,7 +17,7 @@ CREATE TABLE Schueler (
 CREATE TABLE Lehrer (
     Kuerzel varchar(4) PRIMARY KEY,
     Vorname varchar(255) NOT NULL,
-    Nachname varchar(255) NOT NULL,
+    Nachname varchar(255) NOT NULL
 );
 
 CREATE TABLE Schulleitung (
@@ -57,18 +57,18 @@ CREATE TABLE Admin (
     PasswordHash varchar(255) NOT NULL
 );
 
-CREATE USER user@localhost IDENTIFIED BY 'USER PASSWORD';
-GRANT SELECT ON Ag TO user@localhost;
-GRANT SELECT, INSERT ON Schueler TO user@localhost;
-GRANT SELECT, INSERT ON Teilnahme TO user@localhost;
+CREATE USER defaultUser@localhost IDENTIFIED BY 'USER PASSWORD';
+GRANT SELECT ON Ag TO defaultUser@localhost;
+GRANT SELECT, INSERT ON Schueler TO defaultUser@localhost;
+GRANT SELECT, INSERT ON Teilnahme TO defaultUser@localhost;
 
 CREATE USER lehrer@localhost IDENTIFIED BY 'LEHRER PASSWORD';
 GRANT SELECT ON Ag TO lehrer@localhost;
 GRANT SELECT ON Teilnahme TO lehrer@localhost;
-GRANT UPDATE ON Teilnahme.Genehmigt TO lehrer@localhost;
+GRANT UPDATE (Genehmigt) ON Teilnahme TO lehrer@localhost;
 GRANT SELECT ON LehrerLogin TO lehrer@localhost;
 
 CREATE USER schulleitung@localhost IDENTIFIED BY 'SCHULLEITUNG PASSWORD';
 GRANT SELECT ON Ag TO schulleitung@localhost;
-GRANT UPDATE ON Ag.FindetStatt TO schulleitung@localhost;
+GRANT UPDATE (FindetStatt) ON Ag TO schulleitung@localhost;
 GRANT SELECT ON LehrerLogin TO schulleitung@localhost;
