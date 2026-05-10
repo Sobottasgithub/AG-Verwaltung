@@ -1,5 +1,4 @@
-
-INSERT INTO TABLE Klassen (Klasse) VALUES
+INSERT INTO Klassen (Klasse) VALUES
 ("5a"), ("5b"), ("5c"),
 ("6a"), ("6b"), ("6c"),
 ("7a"), ("7b"), ("7c"),
@@ -7,3 +6,5 @@ INSERT INTO TABLE Klassen (Klasse) VALUES
 ("9a"), ("9b"), ("9c"),
 ("10a"), ("10b"), ("10c"),
 ("K11"), ("K12"), ("K13");
+
+INSERT INTO Schueler (Vorname, Nachname, Email, Klasse) VALUES ("Patrick", "Schulze", "example@email.com", "K12");
