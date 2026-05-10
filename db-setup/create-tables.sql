@@ -42,7 +42,7 @@ CREATE TABLE Teilnahme (
     FOREIGN KEY (AgName) REFERENCES Ag(Name),
     SID int,
     FOREIGN KEY (SID) REFERENCES Schueler(SID),
-    Genehmigt boolean
+    Genehmigt boolean DEFAULT false
 );
 
 CREATE TABLE LehrerLogin (
@@ -59,7 +59,7 @@ CREATE TABLE Admin (
 CREATE USER defaultUser@localhost IDENTIFIED BY 'USER PASSWORD';
 GRANT SELECT ON Ag TO defaultUser@localhost;
 GRANT SELECT ON Lehrer TO defaultUser@localhost;
-GRANT SELECT (AgName, Genehmigt) ON Teilnahme TO defaultUser@localhost;
+GRANT SELECT ON Klassen TO defaultUser@localhost;
 GRANT SELECT, INSERT ON Schueler TO defaultUser@localhost;
 GRANT SELECT, INSERT ON Teilnahme TO defaultUser@localhost;
 
