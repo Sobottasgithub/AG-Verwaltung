@@ -1,3 +1,6 @@
 # Nix
 result
 .direnv/
+www-root/login/schulleitung.php
+www-root/login/lehrer.php
+www-root/login/defaultUser.php
