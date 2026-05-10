@@ -27,8 +27,7 @@ CREATE TABLE Schulleitung (
 );
 
 CREATE TABLE Ag (
-    ID int AUTO_INCREMENT PRIMARY KEY,
-    Name varchar(255),
+    Name varchar(255) PRIMARY KEY,
     Leitung varchar(4),
     FOREIGN KEY (Leitung) REFERENCES Lehrer(Kuerzel),
     Raum varchar(6),
@@ -39,8 +38,8 @@ CREATE TABLE Ag (
 
 CREATE TABLE Teilnahme (
     TID int AUTO_INCREMENT PRIMARY KEY,
-    ID int,
-    FOREIGN KEY (ID) REFERENCES Ag(ID),
+    AgName varchar(255),
+    FOREIGN KEY (AgName) REFERENCES Ag(Name),
     SID int,
     FOREIGN KEY (SID) REFERENCES Schueler(SID),
     Genehmigt boolean
