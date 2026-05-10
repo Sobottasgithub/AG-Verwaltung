@@ -21,14 +21,14 @@ CREATE TABLE Lehrer (
 );
 
 CREATE TABLE Schulleitung (
-    SLID int AUTO_INCREMENT PRIMARY KEY,
+    Kuerzel varchar(4) PRIMARY KEY,
     Bezeichnung varchar(255) NOT NULL,
-    Kuerzel varchar(4),
     FOREIGN KEY (Kuerzel) REFERENCES Lehrer(Kuerzel)
 );
 
 CREATE TABLE Ag (
     ID int AUTO_INCREMENT PRIMARY KEY,
+    Name varchar(255),
     Leitung varchar(4),
     FOREIGN KEY (Leitung) REFERENCES Lehrer(Kuerzel),
     Raum varchar(6),
