@@ -24,18 +24,18 @@
         if ($email == "") {
             echo "document.getElementById('email').style.backgroundColor = 'red';";
         }
-        echo "});</script>";
 
         if ($vorname != "" and $nachname != "" and $email != "") {
             require __DIR__ . "/../login/defaultUser.php";
-
+            // The email isn't a factor for a unique student.
+            
             // Is student already in AG?
-            $query="SELECT SID FROM Schueler NATURAL JOIN Teilnahme WHERE
+            $query="SELECT Schueler.SID FROM Schueler NATURAL JOIN Teilnahme WHERE
                     Vorname='".$vorname."' AND Nachname='".$nachname."' AND Klasse='".$klasse."' AND AgName='".$ag."'";
             $result = $conn->query($query);
             if($result->rowCount() == 0) {
                 // Does student exist?
-                $query="SELECT SID FROM Schueler NATURAL JOIN Teilnahme WHERE Vorname='".$vorname."' AND Nachname='".$nachname."' AND Klasse='".$klasse."'";
+                $query="SELECT SID FROM Schueler WHERE Vorname='".$vorname."' AND Nachname='".$nachname."' AND Klasse='".$klasse."'";
                 $result = $conn->query($query);
                 
                 if ($result->rowCount() == 0) {
@@ -50,20 +50,22 @@
                     ]);
         
                     // Fetch SID again
-                    $query="SELECT SID FROM Schueler NATURAL JOIN Teilnahme WHERE Vorname='".$vorname."' AND Nachname='".$nachname."' AND Klasse='".$klasse."'";
+                    $query="SELECT SID FROM Schueler WHERE Vorname='".$vorname."' AND Nachname='".$nachname."' AND Klasse='".$klasse."'";
                     $result = $conn->query($query);
                 }
 
                 $row = $result->fetch(PDO::FETCH_ASSOC);
-                $sid = $row["SID"];
-                echo $sid;
                 $query="INSERT INTO Teilnahme (AGName, SID) VALUES (:ag, :sid)";
                 $result = $conn->prepare($query);
                 $result->execute([
                     ":ag" => $ag,
-                    ":sid" => $sid
+                    ":sid" => $row["SID"]
                 ]);
+                echo "document.getElementById('status').textContent='Du wurdest bei der " . $ag . " AG angemeldet!';";
+            } else {
+                echo "document.getElementById('status').textContent='Du hast dich bereits bei der " . $ag . " AG angemeldet!';";
             }
+            echo "});</script>";
 
             $conn=null;
         }
@@ -102,5 +104,6 @@
     <br/>
     * Pflichtfelder
     <br>
+    <p id="status"></p>
     <button type="submit" name="submitAnmeldung">Anmelden</button>
 </form>
