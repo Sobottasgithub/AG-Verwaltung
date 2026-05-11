@@ -13,8 +13,9 @@
 
         echo "<script type='text/javascript'>
             document.addEventListener('DOMContentLoaded', function() {
-                document.getElementById('klasse').value = '" . $klasse . "';";
-        echo "document.getElementById('ag').value = '" . $ag . "';";
+                document.getElementById('klasse').value = '" . $klasse . "';
+                document.getElementById('ag').value = '" . $ag . "';";
+
         if ($vorname == "") {
             echo "document.getElementById('vorname').style.backgroundColor = 'red';";
         }
@@ -65,10 +66,9 @@
             } else {
                 echo "document.getElementById('status').textContent='Du hast dich bereits bei der " . $ag . " AG angemeldet!';";
             }
-            echo "});</script>";
-
             $conn=null;
         }
+        echo "});</script>";
     }
 ?>
 
