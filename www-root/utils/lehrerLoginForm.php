@@ -3,8 +3,34 @@
         $kuerzel = $_POST['kuerzel'];
         $password = $_POST['password'];
 
+        $status = "";
+        if ($kuerzel != "" and $password != "") {
+            require __DIR__ . "/../login/lehrer.php";
+            $query="SELECT PasswordHash FROM LehrerLogin WHERE Kuerzel='" . $kuerzel . "'";
+            $result = $conn->query($query);
+            if($result->rowCount()==1) {
+                $row = $result->fetch(PDO::FETCH_ASSOC);
+                if (password_verify($password, $row["PasswordHash"])) {
+                    $status = "document.getElementById('status').textContent='Angemeldet!';";
+                    setcookie("lehrerLogin", $kuerzel, [
+                        'expires' => time() + 3600,
+                        'path' => '/',
+                        'domain' => '',
+                        'httponly' => true,
+                        'samesite' => 'Lax'
+                    ]);
+                    header('Location: /utils/lehrer.php');
+                } else {
+                    $status = "document.getElementById('status').textContent='Falsches Kürzel oder Passwort! ". $row["PasswordHash"]."';";
+                }
+            } else {
+                $status = "document.getElementById('status').textContent='Falsches Kürzel oder Passwort!';"; 
+            }
+            $conn=null;
+        }
         echo "<script type='text/javascript'>
             document.addEventListener('DOMContentLoaded', function() {";
+        echo $status;
         if ($kuerzel == "") {
             echo "document.getElementById('kuerzel').style.backgroundColor = 'red';
                   document.getElementById('status').textContent='Fill out both input boxes!';";
@@ -14,22 +40,6 @@
                   document.getElementById('status').textContent='Fill out both input boxes!';";
         }
 
-        if ($kuerzel != "" and $password != "") {
-            require __DIR__ . "/../login/lehrer.php";
-            $query="SELECT PasswordHash FROM LehrerLogin WHERE Kuerzel='" . $kuerzel . "'";
-            $result = $conn->query($query);
-            if($result->rowCount()==1) {
-                $row = $result->fetch(PDO::FETCH_ASSOC);
-                if (password_verify($password, $row["PasswordHash"])) {
-                    echo "document.getElementById('status').textContent='Success!';";
-                } else {
-                    echo "document.getElementById('status').textContent='Falsches Kürzel oder Passwort! ". $row["PasswordHash"]."';";
-                }
-            } else {
-                echo "document.getElementById('status').textContent='Falsches Kürzel oder Passwort!';"; 
-            }
-            $conn=null;
-        }
         echo "});</script>";
     }
 ?>
