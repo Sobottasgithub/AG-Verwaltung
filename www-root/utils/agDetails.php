@@ -1,3 +1,4 @@
+<a href="../index.php">Back</a>
 <?php
     if(isset($_POST['agName'])){
         require __DIR__ . "/../login/defaultUser.php";
