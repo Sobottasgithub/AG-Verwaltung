@@ -6,7 +6,7 @@
                  FROM Ag JOIN Lehrer ON Ag.Leitung = Lehrer.Kuerzel WHERE Name='".$_POST['agName']."'";
         $result = $conn->query($query);
 
-        $teilnehmerCountQuery = "SELECT COUNT(*) AS count FROM Teilnahme WHERE AgName='" . $_POST['agName']. "'";
+        $teilnehmerCountQuery = "SELECT COUNT(*) AS count FROM Teilnahme WHERE AgName='" . $_POST['agName']. "' AND Genehmigt=1";
         $teilnehmerCountResult = $conn->query($teilnehmerCountQuery);
         $count = $teilnehmerCountResult->fetch(PDO::FETCH_ASSOC); 
             
