@@ -66,6 +66,7 @@ GRANT SELECT, INSERT ON Teilnahme TO defaultUser@localhost;
 CREATE USER lehrer@localhost IDENTIFIED BY 'LEHRER PASSWORD';
 GRANT SELECT ON Ag TO lehrer@localhost;
 GRANT SELECT ON Teilnahme TO lehrer@localhost;
+GRANT SELECT ON Schueler TO lehrer@localhost;
 GRANT UPDATE (Genehmigt) ON Teilnahme TO lehrer@localhost;
 GRANT SELECT ON LehrerLogin TO lehrer@localhost;
 
