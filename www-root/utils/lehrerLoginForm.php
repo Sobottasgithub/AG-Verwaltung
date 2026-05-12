@@ -1,4 +1,3 @@
-<a href="../index.php">Back</a>
 <?php
     if (isset($_POST['submitLogin'])) {
         $kuerzel = $_POST['kuerzel'];
@@ -44,8 +43,8 @@
         echo "});</script>";
     }
 ?>
-
-<form method="post">
+<a href="../index.php">Back</a>
+<form method="post" action="/utils/lehrer.php">
     <input id="kuerzel" name="kuerzel" type="text" placeholder="Kürzel"/>
     <input id="password" name="password" type="password" placeholder="Passwort"/>
     <p id="status"></p>

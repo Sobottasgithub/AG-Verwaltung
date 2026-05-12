@@ -1,4 +1,3 @@
-<a href="../index.php">Back</a>
 <?php
     if (!isset($_COOKIE["lehrerLogin"])) {
         header('Location: /utils/lehrer.php');
@@ -36,3 +35,4 @@
     }
     echo "</form></table>";
 ?>
+<a href="../index.php">Back</a>
