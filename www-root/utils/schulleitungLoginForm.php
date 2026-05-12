@@ -1,16 +1,17 @@
 <?php
-    if (isset($_POST['submitLogin'])) {
-        $kuerzel = $_POST['kuerzel'];
-        $password = $_POST['password'];
-
+    if (isset($_POST['submitSchulleitungLogin'])) {
+        $kuerzel = $_POST['schulleitungKuerzel'];
+        $userPassword = $_POST['schulleitungPassword'];
         $status = "";
-        if ($kuerzel != "" and $password != "") {
+        if ($kuerzel != "" and $userPassword != "") {
             require __DIR__ . "/../login/schulleitung.php";
-            $query="SELECT PasswordHash FROM Schulleitung LEFT JOIN LehrerLogin ON Schulleitung.Kuerzel=LehrerLogin.Kuerzel WHERE Schulleitung.Kuerzel='" . $kuerzel . "'";
+            // $query="SELECT PasswordHash FROM Schulleitung LEFT JOIN LehrerLogin ON Schulleitung.Kuerzel=LehrerLogin.Kuerzel WHERE Schulleitung.Kuerzel='" . $kuerzel . "'";
+            $query="SELECT PasswordHash FROM LehrerLogin WHERE Kuerzel='" . $kuerzel . "'";
             $result = $conn->query($query);
             if($result->rowCount()==1) {
                 $row = $result->fetch(PDO::FETCH_ASSOC);
-                if (password_verify($password, $row["PasswordHash"])) {
+                echo $userPassword . " " . $row["PasswordHash"];
+                if (password_verify($userPassword, $row["PasswordHash"])) {
                     $status = "document.getElementById('status').textContent='Angemeldet!';";
                     setcookie("schulleitungLogin", $kuerzel, [
                         'expires' => time() + 3600,
@@ -21,7 +22,7 @@
                     ]);
                     header('Location: /utils/schulleitung.php');
                 } else {
-                    $status = "document.getElementById('status').textContent='Falsches Kürzel, Passwort oder sie sind kein Teil der Schulleitung! ". $row["PasswordHash"]."';";
+                    $status = "document.getElementById('status').textContent='Falsches Kürzel, Passwort oder sie sind kein Teil der Schulleitung!2';";
                 }
             } else {
                 $status = "document.getElementById('status').textContent='Falsches Kürzel, Passwort oder sie sind kein Teil der Schulleitung!';"; 
@@ -35,7 +36,7 @@
             echo "document.getElementById('kuerzel').style.backgroundColor = 'red';
                   document.getElementById('status').textContent='Fill out both input boxes!';";
         }
-        if ($password == "") {
+        if ($userPassword == "") {
             echo "document.getElementById('password').style.backgroundColor = 'red';
                   document.getElementById('status').textContent='Fill out both input boxes!';";
         }
@@ -45,8 +46,8 @@
 ?>
 <a href="../index.php">Back</a>
 <form method="post">
-    <input id="kuerzel" name="kuerzel" type="text" placeholder="Kürzel"/>
-    <input id="password" name="password" type="password" placeholder="Passwort"/>
+    <input id="schulleitungKuerzel" name="schulleitungKuerzel" type="text" placeholder="Kürzel"/>
+    <input id="schulleitungPassword" name="schulleitungPassword" type="password" placeholder="Passwort"/>
     <p id="status"></p>
-    <button type="submit" name="submitLogin">Anmelden</button>
+    <button type="submit" name="submitSchulleitungLogin">Anmelden</button>
 </form>
