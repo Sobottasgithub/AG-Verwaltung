@@ -9,6 +9,7 @@
   </head>
   <body>
     <a href="/utils/lehrer.php">Lehrer</a>
+    <a href="/utils/schulleitung.php">Schulleitung</a>
 
     <?php
         include "utils/agDisplay.php";

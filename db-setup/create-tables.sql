@@ -74,3 +74,4 @@ CREATE USER schulleitung@localhost IDENTIFIED BY 'SCHULLEITUNG PASSWORD';
 GRANT SELECT ON Ag TO schulleitung@localhost;
 GRANT UPDATE (FindetStatt) ON Ag TO schulleitung@localhost;
 GRANT SELECT ON LehrerLogin TO schulleitung@localhost;
+GRANT SELECT ON Schulleitung TO schulleitung@localhost;
