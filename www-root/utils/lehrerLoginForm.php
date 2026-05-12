@@ -1,16 +1,16 @@
 <?php
     if (isset($_POST['submitLogin'])) {
         $kuerzel = $_POST['kuerzel'];
-        $password = $_POST['password'];
+        $userPassword = $_POST['password'];
 
         $status = "";
-        if ($kuerzel != "" and $password != "") {
+        if ($kuerzel != "" and $userPassword != "") {
             require __DIR__ . "/../login/lehrer.php";
             $query="SELECT PasswordHash FROM LehrerLogin WHERE Kuerzel='" . $kuerzel . "'";
             $result = $conn->query($query);
             if($result->rowCount()==1) {
                 $row = $result->fetch(PDO::FETCH_ASSOC);
-                if (password_verify($password, $row["PasswordHash"])) {
+                if (password_verify($userPassword, $row["PasswordHash"])) {
                     $status = "document.getElementById('status').textContent='Angemeldet!';";
                     setcookie("lehrerLogin", $kuerzel, [
                         'expires' => time() + 3600,
@@ -21,7 +21,7 @@
                     ]);
                     header('Location: /utils/lehrer.php');
                 } else {
-                    $status = "document.getElementById('status').textContent='Falsches Kürzel oder Passwort! ". $row["PasswordHash"]."';";
+                    $status = "document.getElementById('status').textContent='Falsches Kürzel oder Passwort!';";
                 }
             } else {
                 $status = "document.getElementById('status').textContent='Falsches Kürzel oder Passwort!';"; 
@@ -35,7 +35,7 @@
             echo "document.getElementById('kuerzel').style.backgroundColor = 'red';
                   document.getElementById('status').textContent='Fill out both input boxes!';";
         }
-        if ($password == "") {
+        if ($userPassword == "") {
             echo "document.getElementById('password').style.backgroundColor = 'red';
                   document.getElementById('status').textContent='Fill out both input boxes!';";
         }

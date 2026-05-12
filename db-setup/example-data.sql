@@ -32,4 +32,4 @@ INSERT INTO Ag (Name, Leitung, Raum, Wochentag, FindetStatt, Beschreibung) VALUE
 ("Informatik", "CAKM", "OG112", "Dienstag", false, "Hier lernt ihr viel über Informatik!"),
 ("Sport", "POEP", "TUH2", "Mittwoch", false, "Bewegt euch!");
 
-INSERT INTO LehrerLogin (Kuerzel, PasswordHash) VALUES ("CAKM", "$argon2id$v=19$m=2048,t=4,p=3$NUhZWWRkb0tmcUFvQ1J3dA$usK3kOHk0sN1ZbA0V2ZbdK60a/EhL9jBmQLxR43gLU8");
+INSERT INTO LehrerLogin (Kuerzel, PasswordHash) VALUES ("CAKM", "$argon2id$v=19$m=131072,t=4,p=2$Li9aanV2SmFBZHdaMTRDSQ$iLEyLYc7kUcvnwszXzECLWa+RTIsSjTYzrdsBGCOj4A");
