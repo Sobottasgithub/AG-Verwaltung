@@ -75,3 +75,5 @@ GRANT SELECT ON Ag TO schulleitung@localhost;
 GRANT UPDATE (FindetStatt) ON Ag TO schulleitung@localhost;
 GRANT SELECT ON LehrerLogin TO schulleitung@localhost;
 GRANT SELECT ON Schulleitung TO schulleitung@localhost;
+GRANT SELECT ON Teilnahme TO schulleitung@localhost;
+

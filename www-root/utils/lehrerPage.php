@@ -9,6 +9,8 @@
         $sid = $_POST["genehmigen"];
         $query = "UPDATE Teilnahme SET genehmigt=true WHERE SID='" . $sid . "'";
         $result = $conn->query($query);
+
+        require __DIR__ . "/autoAcceptAg.php";
     }
 
     $query = "SELECT Name FROM Ag WHERE Leitung='".$_COOKIE["lehrerLogin"]."'";
