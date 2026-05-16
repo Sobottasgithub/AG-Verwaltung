@@ -10,6 +10,7 @@
   <body>
     <a href="/utils/lehrer.php">Lehrer</a>
     <a href="/utils/schulleitung.php">Schulleitung</a>
+    <a href="/utils/admin.php">Admin</a>
 
     <?php
         include "utils/agDisplay.php";
