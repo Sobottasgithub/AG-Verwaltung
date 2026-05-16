@@ -4,3 +4,4 @@ result
 www-root/login/schulleitung.php
 www-root/login/lehrer.php
 www-root/login/defaultUser.php
+www-root/login/admin.php
