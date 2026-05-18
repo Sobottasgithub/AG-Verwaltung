@@ -68,6 +68,8 @@
         $lastName = $_POST["lastNameNewTeacher"];
         $newPasswd = $_POST["passwdNewTeacher"];
 
+        echo "<script type='text/javascript'>
+            document.addEventListener('DOMContentLoaded', function() {";
         if ($firstName != "" && $lastName != "" && $newPasswd != "") {
             $newKuerzel = str_replace("ä", "ae", $lastName);
             $newKuerzel = str_replace("ü", "ue", $newKuerzel);
@@ -87,10 +89,22 @@
             if ($selectWhereKuerzelResult->rowCount() == 0) {
                 $insertNewTeacherQuery = "INSERT INTO Lehrer (Kuerzel, Vorname, Nachname) VALUES ('".$newKuerzel."', '".$firstName."', '".$lastName."');";
                 $insertNewTeacherResult = $conn->query($insertNewTeacherQuery);
+                echo "document.getElementById('teacherCreateStatus').textContent='Lehrer erstellt!';";
             } else {
-                echo "Teacher already exists!";
+                echo "document.getElementById('teacherCreateStatus').textContent='Lehrer Kürzel existiert schon!';";
             }            
+        } else {
+            if ($firstName == "") {
+                echo "document.getElementById('firstNameNewTeacher').style.backgroundColor = 'red';";
+            }
+            if ($lastName == "") {
+                echo "document.getElementById('lastNameNewTeacher').style.backgroundColor = 'red';";
+            }
+            if ($newPasswd == "") {
+                echo "document.getElementById('passwdNewTeacher').style.backgroundColor = 'red';";
+            }
         }
+        echo "});</script>";
     }
 ?>
 
