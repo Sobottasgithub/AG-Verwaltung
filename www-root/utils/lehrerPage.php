@@ -10,9 +10,12 @@
         $query = "UPDATE Teilnahme SET genehmigt=true WHERE SID='" . $sid . "'";
         $result = $conn->query($query);
 
+        $conn = null;
+
         require __DIR__ . "/autoAcceptAg.php";
     }
 
+     require __DIR__ . "/../login/lehrer.php";
     $query = "SELECT Name FROM Ag WHERE Leitung='".$_COOKIE["lehrerLogin"]."'";
     $result = $conn->query($query);
     echo "<form method='post'><table>";
