@@ -62,9 +62,40 @@
         $deleteLehrerQuery = "DELETE FROM Lehrer WHERE Kuerzel='".$_POST["delTeacher"]."';";
         $deleteLehrerResult = $conn->query($deleteLehrerQuery);
     }
+
+    if(isset($_POST["submitNewTeacher"])) {
+        $firstName = $_POST["firstNameNewTeacher"];
+        $lastName = $_POST["lastNameNewTeacher"];
+        $newPasswd = $_POST["passwdNewTeacher"];
+
+        if ($firstName != "" && $lastName != "" && $newPasswd != "") {
+            $newKuerzel = str_replace("ä", "ae", $lastName);
+            $newKuerzel = str_replace("ü", "ue", $newKuerzel);
+            $newKuerzel = str_replace("ö", "oe", $newKuerzel);
+            $newKuerzel = str_replace("Ä", "Ae", $newKuerzel);
+            $newKuerzel = str_replace("Ü", "Ue", $newKuerzel);
+            $newKuerzel = str_replace("Ö", "Oe", $newKuerzel);
+            $newKuerzel = str_replace("ß", "ss", $newKuerzel);
+
+            $newKuerzel = strtoupper($newKuerzel);
+            $newKuerzel = substr($newKuerzel,0,4);
+
+            $selectWhereKuerzelQuery = "SELECT * FROM Lehrer WHERE Kuerzel='".$newKuerzel."';";
+            $selectWhereKuerzelResult = $conn->query($selectWhereKuerzelQuery);
+
+
+            if ($selectWhereKuerzelResult->rowCount() == 0) {
+                $insertNewTeacherQuery = "INSERT INTO Lehrer (Kuerzel, Vorname, Nachname) VALUES ('".$newKuerzel."', '".$firstName."', '".$lastName."');";
+                $insertNewTeacherResult = $conn->query($insertNewTeacherQuery);
+            } else {
+                echo "Teacher already exists!";
+            }            
+        }
+    }
 ?>
 
 <?php
+    echo "<h1>Schüler</h1>";
     // SCHUELER
     $query = "SELECT * FROM Teilnahme LEFT JOIN Schueler ON Teilnahme.SID = Schueler.SID;";
     $result = $conn->query($query);
@@ -90,6 +121,8 @@
     }
     echo "</table>";
 
+    
+    echo "<h1>Lehrer</h1>";
     // LEHRER
     $lehrerQuery = "SELECT * FROM Lehrer;";
     $lehrerResult = $conn->query($lehrerQuery);
@@ -110,7 +143,15 @@
     }
     echo "</table>";
 
-    echo "create new teacher form";
-
     $conn = null;
 ?>
+
+<form method="post">
+    <p id="teacherCreateStatus" name="teacherCreateStatus"></p>
+    <input type="text" id="firstNameNewTeacher" name="firstNameNewTeacher" placeholder="Vorname"/>
+    <input type="text" id="lastNameNewTeacher" name="lastNameNewTeacher" placeholder="Nachname"/>
+    <input type="password" id="passwdNewTeacher" name="passwdNewTeacher" placeholder="Passwort"/>
+    <button id="submitNewTeacher" name="submitNewTeacher" type="submit">Create</button>
+</form>
+
+<h1>Schulleitung</h1>

@@ -1,6 +1,6 @@
 <?php
     $userName = "root";
-    $password = "ROOT PASSWORD";
+    $password = "1234";
 
     require "login.php";
 ?>
