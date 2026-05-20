@@ -35,20 +35,29 @@
         $newPasswd = $_POST["passwd"];
 
         if ($newPasswd == "") {
-            echo "Abort!";
-        }
-
-        $passwordHash = password_hash($newPasswd, PASSWORD_ARGON2ID, ['memory_cost' => 1<<17, 'time_cost' => 4, 'threads' => 2]);
-
-        $query = "SELECT * FROM LehrerLogin WHERE Kuerzel='".$_POST["setPasswd"]."'";
-        $result = $conn->query($query);
-
-        if ($result->rowCount() > 0) {
-            $query = "UPDATE LehrerLogin SET PasswordHash='".$passwordHash."' WHERE Kuerzel='".$_POST["setPasswd"]."';";
+            echo "<script type='text/javascript'>
+                document.addEventListener('DOMContentLoaded', function() {
+                    alert('Kein Passwort eingegben!');
+                });</script>";
         } else {
-            $query = "INSERT INTO LehrerLogin (Kuerzel, PasswordHash) VALUES ('".$_POST["setPasswd"]."', '".$passwordHash."');";
+            $passwordHash = password_hash($newPasswd, PASSWORD_ARGON2ID, ['memory_cost' => 1<<17, 'time_cost' => 4, 'threads' => 2]);
+
+            $query = "SELECT * FROM LehrerLogin WHERE Kuerzel='".$_POST["setPasswd"]."'";
+            $result = $conn->query($query);
+
+            if ($result->rowCount() > 0) {
+                $query = "UPDATE LehrerLogin SET PasswordHash='".$passwordHash."' WHERE Kuerzel='".$_POST["setPasswd"]."';";
+            } else {
+                $query = "INSERT INTO LehrerLogin (Kuerzel, PasswordHash) VALUES ('".$_POST["setPasswd"]."', '".$passwordHash."');";
+            }
+
+            echo "<script type='text/javascript'>
+                document.addEventListener('DOMContentLoaded', function() {
+                    alert('Neues Passwort wurde gesetzt!');
+                });</script>";
+
+            $result = $conn->query($query);
         }
-        $result = $conn->query($query);
     }
 
     if(isset($_POST["delTeacher"])) {
@@ -106,6 +115,14 @@
         }
         echo "});</script>";
     }
+
+    if (isset($_POST["promote"])) {
+        $description = $_POST["description"];
+        $lehrerKuerzelPromote = $_POST["lehrerKuerzelPromote"];
+
+        $promoteTeacherQuery = "INSERT INTO Schulleitung (Kuerzel, Bezeichnung) VALUES ('".$lehrerKuerzelPromote."', '".$description."')";
+        $promoteTeacherResult = $conn->query($promoteTeacherQuery);
+    }
 ?>
 
 <?php
@@ -156,8 +173,6 @@
         }
     }
     echo "</table>";
-
-    $conn = null;
 ?>
 
 <form method="post">
@@ -169,3 +184,25 @@
 </form>
 
 <h1>Schulleitung</h1>
+<form method="post">
+    <select name="lehrerKuerzelPromote" id="lehrerKuerzelPromote">
+        <?php
+            $selectLehrerKuerzelQuery = "SELECT Kuerzel FROM Lehrer WHERE Kuerzel not in (SELECT Kuerzel FROM Schulleitung);";
+            $selectLehrerKuerzelResult = $conn->query($selectLehrerKuerzelQuery);
+
+            for ($index = 0; $selectLehrerKuerzelResult->rowCount() > $index; $index++) {
+                $row = $selectLehrerKuerzelResult->fetch(PDO::FETCH_ASSOC);
+                echo "<option value='" . $row["Kuerzel"] . "'>" . $row["Kuerzel"] . "</option>";
+            }
+        ?>
+    </select>
+    <input id="description" name="description" type="text" placeholder="Titel/Beschreibung"/>
+    <button id="promote" name="promote">Befördern</button>
+</form>
+
+<h1>Neue AG erstellen</h1>
+
+
+<?php
+    $conn = null;
+?>
