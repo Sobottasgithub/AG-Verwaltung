@@ -123,6 +123,41 @@
         $promoteTeacherQuery = "INSERT INTO Schulleitung (Kuerzel, Bezeichnung) VALUES ('".$lehrerKuerzelPromote."', '".$description."')";
         $promoteTeacherResult = $conn->query($promoteTeacherQuery);
     }
+
+    if (isset($_POST["submitNewAg"])) {
+        $newAgName = $_POST["newAgName"];
+        $newAgRoom = $_POST["newAgRoom"];
+        $newAgDescription = $_POST["newAgDescription"];
+        $newAgLeitungKuerzel = $_POST["newAgLeitungKuerzel"];
+        $newAgWochentag = $_POST["newAgWochentag"];
+
+        echo "<script type='text/javascript'>
+            document.addEventListener('DOMContentLoaded', function() {";
+        if ($newAgName != "" && $newAgRoom != "" && $newAgDescription != "") {
+            $selectAgWithSameNameQuery = "SELECT * FROM Ag WHERE Name='".$newAgName."';";
+            $selectAgWithSameNameResult = $conn->query($selectAgWithSameNameQuery);
+
+            if ($selectAgWithSameNameResult->rowCount() == 0) {
+                $selectAgWithSameNameQuery = "INSERT INTO Ag (Name, Leitung, Raum, Wochentag, FindetStatt, Beschreibung) VALUES ('".$newAgName."', '".$newAgLeitungKuerzel."', '".$newAgRoom."', '".$newAgWochentag."', false, '".$newAgDescription."');";
+                $selectAgWithSameNameResult = $conn->query($selectAgWithSameNameQuery);
+
+                echo "document.getElementById('newAgStatus').textContent='Neue Ag erstellt!';";
+            } else {
+                echo "document.getElementById('newAgStatus').textContent='AG existiert schon!';";
+            }
+        } else {
+            if ($newAgName == "") {
+                echo "document.getElementById('newAgName').style.backgroundColor = 'red';";
+            }
+            if ($newAgRoom == "") {
+                echo "document.getElementById('newAgRoom').style.backgroundColor = 'red';";
+            }
+            if ($newAgDescription == "") {
+                echo "document.getElementById('newAgDescription').style.backgroundColor = 'red';";
+            }
+        }
+        echo "});</script>";
+    }
 ?>
 
 <?php
@@ -152,7 +187,6 @@
     }
     echo "</table>";
 
-    
     echo "<h1>Lehrer</h1>";
     // LEHRER
     $lehrerQuery = "SELECT * FROM Lehrer;";
@@ -201,7 +235,31 @@
 </form>
 
 <h1>Neue AG erstellen</h1>
+<p id="newAgStatus" name="newAgStatus"></p>
+<form method="post">
+    <input type="text" id="newAgName" name="newAgName" placeholder="AG Name"/>
+    <select id="newAgLeitungKuerzel" name="newAgLeitungKuerzel">
+        <?php
+            $teacherKuerzelQuery = "SELECT Kuerzel FROM Lehrer;";
+            $teacherKuerzelResult = $conn->query($teacherKuerzelQuery);
 
+            for ($index = 0; $teacherKuerzelResult->rowCount() > $index; $index++) {
+                $row = $teacherKuerzelResult->fetch(PDO::FETCH_ASSOC);
+                echo "<option value='" . $row["Kuerzel"] . "'>" . $row["Kuerzel"] . "</option>";
+            }
+        ?>
+    </select>
+    <select id="newAgWochentag" name="newAgWochentag">
+        <option id="Montag" name="Montag">Montag</option>
+        <option id="Dienstag" name="Dienstag">Dienstag</option>
+        <option id="Mittwoch" name="Mittwoch">Mittwoch</option>
+        <option id="Donnerstag" name="Donnerstag">Donnerstag</option>
+        <option id="Freitag" name="Freitag">Freitag</option>
+    </select>
+    <input type="text" id="newAgRoom" name="newAgRoom" placeholder="Raum"/>
+    <input type="text" id="newAgDescription" name="newAgDescription" placeholder="Beschreibung"/>
+    <button type="submit" id="submitNewAg" name="submitNewAg">Erstellen</button>
+</form>
 
 <?php
     $conn = null;
