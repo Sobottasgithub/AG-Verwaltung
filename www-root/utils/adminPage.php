@@ -158,6 +158,21 @@
         }
         echo "});</script>";
     }
+
+    if (isset($_POST["deleteAg"])) {
+        $deleteAgName = $_POST["deleteAgName"];
+
+        $deleteAgTeilnahmeQuery = "DELETE FROM Teilnahme WHERE AgName='".$deleteAgName."';";
+        $deleteAgTeilnahmeResult = $conn->query($deleteAgTeilnahmeQuery);
+        
+        $deleteAgQuery = "DELETE FROM Ag WHERE Name='".$deleteAgName."';";
+        $deleteAgResult = $conn->query($deleteAgQuery);
+
+        echo "<script type='text/javascript'>
+            document.addEventListener('DOMContentLoaded', function() {
+                alert('Ag wurde gelöscht!');
+            });</script>";
+    }
 ?>
 
 <?php
@@ -234,7 +249,8 @@
     <button id="promote" name="promote">Befördern</button>
 </form>
 
-<h1>Neue AG erstellen</h1>
+<h1>AG</h1>
+<h2>Neue AG erstellen</h2>
 <p id="newAgStatus" name="newAgStatus"></p>
 <form method="post">
     <input type="text" id="newAgName" name="newAgName" placeholder="AG Name"/>
@@ -259,6 +275,21 @@
     <input type="text" id="newAgRoom" name="newAgRoom" placeholder="Raum"/>
     <input type="text" id="newAgDescription" name="newAgDescription" placeholder="Beschreibung"/>
     <button type="submit" id="submitNewAg" name="submitNewAg">Erstellen</button>
+</form>
+<h2>AG löschen</h2>
+<form method="post">
+    <select id="deleteAgName" name="deleteAgName">
+        <?php
+            $deleteAgNameQuery = "SELECT Name FROM Ag;";
+            $deleteAgNameResult = $conn->query($deleteAgNameQuery);
+
+            for ($index = 0; $deleteAgNameResult->rowCount() > $index; $index++) {
+                $row = $deleteAgNameResult->fetch(PDO::FETCH_ASSOC);
+                echo "<option value='" . $row["Name"] . "'>" . $row["Name"] . "</option>";
+            }
+        ?>
+    </select>
+    <button type="submit" name="deleteAg" id="deleteAg">Löschen</button>
 </form>
 
 <?php
