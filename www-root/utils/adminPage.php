@@ -67,6 +67,14 @@
             $deleteLehrerLoginQuery = "DELETE FROM LehrerLogin WHERE Kuerzel='".$_POST["delTeacher"]."';";
             $deleteLehrerLoginResult = $conn->query($deleteLehrerLoginQuery);
         }
+
+        $isInSchulleitungQuery = "SELECT * FROM Schulleitung WHERE Kuerzel='".$_POST["delTeacher"]."'";
+        $isInSchulleitungResult = $conn->query($isInSchulleitungQuery);
+        if ($isInSchulleitungResult->rowCount() > 0) {
+            $deleteSchulleitungQuery = "DELETE FROM Schulleitung WHERE Kuerzel='".$_POST["delTeacher"]."';";
+            $deleteSchulleitungResult = $conn->query($deleteSchulleitungQuery);
+        }
+
         
         $deleteLehrerQuery = "DELETE FROM Lehrer WHERE Kuerzel='".$_POST["delTeacher"]."';";
         $deleteLehrerResult = $conn->query($deleteLehrerQuery);
