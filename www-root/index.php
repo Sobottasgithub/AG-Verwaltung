@@ -11,11 +11,20 @@
     <a href="/utils/lehrer.php">Lehrer</a>
     <a href="/utils/schulleitung.php">Schulleitung</a>
     <a href="/utils/admin.php">Admin</a>
-    <div class="pageBody">
-      <?php
-          include "utils/agDisplay.php";
-          include "utils/agRegisterForm.php";
-      ?>
+    <div class="center">
+      <div class="pageBody">
+        <div class="center">
+          <?php
+              include "utils/agDisplay.php";
+          ?>
+        </div>
+        <br/>
+        <div class="center">
+          <?php
+              include "utils/agRegisterForm.php";
+          ?>
+        </div>
+      </div>
     </div>
   </body>
 </html>

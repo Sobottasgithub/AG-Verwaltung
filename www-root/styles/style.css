@@ -7,8 +7,44 @@
 body {
   background-color: var(--primary-body-bg);
   color: var(--font-color);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+table {
+  border: 1px solid var(--font-color);
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid var(--font-color);
+  padding-right: 2em;
+  padding-left: 2em;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+
 }
 
 .pageBody {
   background-color: var(--secondary-body-bg);
+  width: 80%;
+  min-height: 80vh;
+  padding:2em;
+}
+
+.center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.agButtonDisplay {
+  background-color: rgba(0,0,0,0);
+  border: 0px solid;
+  color: blue;
+  text-decoration: underline;
+}
+
+.agButtonDisplay:hover {
+  color: red;
 }

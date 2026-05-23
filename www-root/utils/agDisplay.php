@@ -6,13 +6,12 @@
 
     echo "<form action='/utils/agDetails.php' method='post'>";
     echo "<table>";
-    echo "<tr><td>AG</td><td>Vorname</td><td>Nachname</td><td>Leitung</td><td>Raum</td><td>Wochentag</td></tr>";
+    echo "<tr><th>AG</th><th>Lehrkraft</th><th>Kürzel</th><th>Raum</th><th>Wochentag</th></tr>";
     if ($result->rowCount() > 0) {
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             echo "<tr>";
-            echo "<td><button type='submit' name='agName' value='".$row["Name"]."'>" . $row["Name"] . "</button></td>";
-            echo "<td>" . $row["Vorname"] . "</td>";
-            echo "<td>" . $row["Nachname"] . "</td>";
+            echo "<td><button class='agButtonDisplay' type='submit' name='agName' value='".$row["Name"]."'>" . $row["Name"] . "</button></td>";
+            echo "<td>" . $row["Vorname"] . " " . $row["Nachname"] . "</td>";
             echo "<td>" . $row["Leitung"] . "</td>";
             echo "<td>" . $row["Raum"] . "</td>";
             echo "<td>" . $row["Wochentag"] . "</td>";
