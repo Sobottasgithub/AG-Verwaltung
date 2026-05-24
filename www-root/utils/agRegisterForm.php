@@ -71,7 +71,6 @@
         echo "});</script>";
     }
 ?>
-
 <form method="post">
     <input type="text" placeholder="Vorname" name="vorname" id="vorname" <?php echo "value='".$vorname."'"?>/>*<br/>
     <input type="text" placeholder="Nachname" name="nachname" id="nachname" <?php echo "value='".$nachname."'"?>/>*<br/>

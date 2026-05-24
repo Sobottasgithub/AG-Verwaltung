@@ -13,11 +13,15 @@
     <a href="/utils/admin.php">Admin</a>
     <div class="center">
       <div class="pageBody">
+        <h2 class="center">Arbeitsgemeinschaften</h2>
         <div class="center">
           <?php
               include "utils/agDisplay.php";
           ?>
         </div>
+        <br/>
+        <h2 class="center">Anmelden</h2>
+        <span class="center">Melde dich für eine Ag an!</span>
         <br/>
         <div class="center">
           <?php
