@@ -1,0 +1,57 @@
+:root {
+  --primary-body-bg: rgba(231, 231, 231, 1);
+  --secondary-body-bg: rgba(255, 255, 255, 1);
+  --font-color: rgb(85, 85, 85);
+  --accent-color: rgb(122, 0, 48);
+  --accent-color-2: rgb(115, 0, 44);
+}
+
+body {
+  background-color: var(--primary-body-bg);
+  color: var(--font-color);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+table {
+  border: 1px solid var(--font-color);
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid var(--font-color);
+  padding-right: 2em;
+  padding-left: 2em;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+}
+
+button {
+  border: 1px solid var(--accent-color);
+  border-radius: 4px;
+  background-color: var(--secondary-body-bg);
+  color: var(--font-color);
+  padding-left: 0.6em;
+  padding-right: 0.6em;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+}
+
+button:hover{
+  background-color: var(--accent-color);
+  color: var(--secondary-body-bg);
+}
+
+.center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageBody {
+  background-color: var(--secondary-body-bg);
+  width: 80%;
+  min-height: 80vh;
+  padding:2em;
+  margin-top: 1em;
+}
