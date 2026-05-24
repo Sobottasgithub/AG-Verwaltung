@@ -50,11 +50,13 @@
                             echo "<tr><th>AG</th><th>Vorname</th><th>Nachname</th><th>Email</th><th>Klasse</th><th>Genehmigen</th></tr>";
 
                             if ($result->rowCount() > 0) {
+                                $selectSchuelerStatement = $conn->prepare("SELECT * FROM Schueler NATURAL JOIN Teilnahme WHERE AgName = :agName");
                                 while($agRow = $result->fetch(PDO::FETCH_ASSOC)) {
-                                    $query = "SELECT * FROM Schueler NATURAL JOIN Teilnahme WHERE AgName='" . $agRow['Name'] . "'";
-                                    $result = $conn->query($query);
-                                    if ($result->rowCount() > 0) {
-                                        while($schuelerRow = $result->fetch(PDO::FETCH_ASSOC)) {
+                                    $selectSchuelerStatement->execute([':agName' => $agRow['Name']]);
+                                    $selectSchuelerResult = $selectSchuelerStatement->fetchAll(PDO::FETCH_ASSOC);
+                                                                            
+                                    if (count($selectSchuelerResult) > 0) {
+                                        foreach($selectSchuelerResult as $schuelerRow) {
                                             echo "<tr><td>" . $agRow["Name"] . "</td><td>" . $schuelerRow["Vorname"] . "</td><td>" . $schuelerRow["Nachname"] . "</td><td>" . $schuelerRow["Email"] . "</td><td>" . $schuelerRow["Klasse"] . "</td><td>";
                                             if ($schuelerRow["Genehmigt"] == 0) {
                                                 echo "<button type='submit' name='genehmigen' value='" . $schuelerRow["SID"] . "'>Genehmigen</button>";
