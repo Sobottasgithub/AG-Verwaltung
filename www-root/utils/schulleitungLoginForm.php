@@ -32,20 +32,39 @@
         echo $status;
         if ($kuerzel == "") {
             echo "document.getElementById('kuerzel').style.backgroundColor = 'red';
-                  document.getElementById('status').textContent='Fill out both input boxes!';";
+                  document.getElementById('status').textContent='Bitte fülle alle Pflichtfelder aus!';";
         }
         if ($userPassword == "") {
             echo "document.getElementById('password').style.backgroundColor = 'red';
-                  document.getElementById('status').textContent='Fill out both input boxes!';";
+                  document.getElementById('status').textContent='Bitte fülle alle Pflichtfelder aus!';";
         }
 
         echo "});</script>";
     }
 ?>
-<a href="../index.php">Back</a>
-<form method="post">
-    <input id="schulleitungKuerzel" name="schulleitungKuerzel" type="text" placeholder="Kürzel"/>
-    <input id="schulleitungPassword" name="schulleitungPassword" type="password" placeholder="Passwort"/>
-    <p id="status"></p>
-    <button type="submit" name="submitSchulleitungLogin">Anmelden</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AG-Verwaltung - Schulleitung</title>
+    <link rel="stylesheet" href="../styles/login.css">
+  </head>
+  <body>
+    <div class="pageBody">
+        <form action="../index.php"><button type="submit">Back</button></form>
+        <br>
+        <div class="center">
+            <form method="post">
+                <h2>Schulleitung Login</h2>
+                <input id="schulleitungKuerzel" name="schulleitungKuerzel" type="text" placeholder="Kürzel"/>*
+                <input id="schulleitungPassword" name="schulleitungPassword" type="password" placeholder="Passwort"/>*<br>
+                <span>* Pflichtfelder</span>
+                <p id="status"></p>
+                <button type="submit" name="submitSchulleitungLogin">Anmelden</button>
+            </form>
+        </div>
+    </div>
+  </body>
+</html>
