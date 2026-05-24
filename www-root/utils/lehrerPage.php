@@ -47,7 +47,7 @@
                             $result = $conn->query($query);
                             
                             echo "<form method='post'><table>";
-                            echo "<tr><td>AG</td><td>Vorname</td><td>Nachname</td><td>Email</td><td>Klasse</td><td>Genehmigen</td></tr>";
+                            echo "<tr><th>AG</th><th>Vorname</th><th>Nachname</th><th>Email</th><th>Klasse</th><th>Genehmigen</th></tr>";
 
                             if ($result->rowCount() > 0) {
                                 while($agRow = $result->fetch(PDO::FETCH_ASSOC)) {
