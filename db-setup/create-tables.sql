@@ -69,6 +69,7 @@ GRANT SELECT ON Teilnahme TO lehrer@localhost;
 GRANT SELECT ON Schueler TO lehrer@localhost;
 GRANT UPDATE (Genehmigt) ON Teilnahme TO lehrer@localhost;
 GRANT SELECT ON LehrerLogin TO lehrer@localhost;
+GRANT SELECT ON Lehrer TO lehrer@localhost;
 
 CREATE USER schulleitung@localhost IDENTIFIED BY 'SCHULLEITUNG PASSWORD';
 GRANT SELECT ON Ag TO schulleitung@localhost;
