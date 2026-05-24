@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="styles/style.css">
   </head>
   <body>
-    <a href="/utils/lehrer.php">Lehrer</a>
-    <a href="/utils/schulleitung.php">Schulleitung</a>
-    <a href="/utils/admin.php">Admin</a>
+    <ul>
+      <li><a href="/utils/lehrer.php" class="active">Lehrer</a></li>
+      <li><a href="/utils/schulleitung.php">Schulleitung</a></li>
+      <li><a href="/utils/admin.php">Admin</a></li>
+    </ul>
     <div class="center">
       <div class="pageBody">
         <h2 class="center">Arbeitsgemeinschaften</h2>
