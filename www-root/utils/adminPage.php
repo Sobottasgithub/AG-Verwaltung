@@ -182,124 +182,147 @@
             });</script>";
     }
 ?>
-
-<?php
-    echo "<h1>Schüler</h1>";
-    // SCHUELER
-    $query = "SELECT * FROM Teilnahme LEFT JOIN Schueler ON Teilnahme.SID = Schueler.SID;";
-    $result = $conn->query($query);
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>AG-Verwaltung - Admin</title>
+        <link rel="stylesheet" href="../styles/adminPage.css">
+    </head>
+    <body>
+        <div class="center">
+            <div class="pageBody">
+                <form action="../index.php"><button type="submit">Back</button></form>
+                <br>
+                <div class="center">
+                    <div>
+                        <h1>Admin Einstellungen</h1>
+                        <?php
+                            echo "<h2>Schüler</h2>";
+                            // SCHUELER
+                            $query = "SELECT * FROM Teilnahme LEFT JOIN Schueler ON Teilnahme.SID = Schueler.SID;";
+                            $result = $conn->query($query);
     
-    echo "<table>";
-    echo "<tr><td>AG</td><td>Vorname</td><td>Nachname</td><td>Email</td><td>Klasse</td><td>Genehmigt(?)</td><td></td></tr>";
-    if($result->rowCount() > 0) {
-        while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-           $tableRow = "<tr><td>".$row["AgName"]."</td>".
-                "<td>".$row["Vorname"]."</td>".
-                "<td>".$row["Nachname"]."</td>".
-                "<td>".$row["Email"]."</td>".
-                "<td>".$row["Klasse"]."</td>";
-            if ($row["Genehmigt"] == 1) {
-                $tableRow = $tableRow."<td>Ja</td>";
-            } else {
-                $tableRow = $tableRow."<td>Nein</td>";
-            }
-            $tableRow = $tableRow."<td><form method='post'><button type='submit' name='delTeilnahme' id='delTeilnahme' value='".$row["TID"]."'>Löschen</button></form></td></tr>";
-            echo $tableRow;
+                            echo "<table>";
+                            echo "<tr><td>AG</td><td>Vorname</td><td>Nachname</td><td>Email</td><td>Klasse</td><td>Genehmigt(?)</td><td></td></tr>";
+                            if($result->rowCount() > 0) {
+                                while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                                   $tableRow = "<tr><td>".$row["AgName"]."</td>".
+                                        "<td>".$row["Vorname"]."</td>".
+                                        "<td>".$row["Nachname"]."</td>".
+                                        "<td>".$row["Email"]."</td>".
+                                        "<td>".$row["Klasse"]."</td>";
+                                    if ($row["Genehmigt"] == 1) {
+                                        $tableRow = $tableRow."<td>Ja</td>";
+                                    } else {
+                                        $tableRow = $tableRow."<td>Nein</td>";
+                                    }
+                                    $tableRow = $tableRow."<td><form method='post'><button type='submit' name='delTeilnahme' id='delTeilnahme' value='".$row["TID"]."'>Löschen</button></form></td></tr>";
+                                    echo $tableRow;
            
-        }
-    }
-    echo "</table>";
+                                }
+                            }
+                            echo "</table>";
 
-    echo "<h1>Lehrer</h1>";
-    // LEHRER
-    $lehrerQuery = "SELECT * FROM Lehrer;";
-    $lehrerResult = $conn->query($lehrerQuery);
+                            echo "<h2>Lehrer</h2>";
+                            // LEHRER
+                            $lehrerQuery = "SELECT * FROM Lehrer;";
+                            $lehrerResult = $conn->query($lehrerQuery);
 
-    echo "<table>";
-    echo "<tr><td>Kürzel</td><td>Vorname</td><td>Nachname</td><td></td><td></td><td></td></tr>";
-    if($lehrerResult->rowCount() > 0) {
-        while($lehrerRow = $lehrerResult->fetch(PDO::FETCH_ASSOC)) {
-            $lehrerTableRow = "<tr><form method='post'><td>".$lehrerRow["Kuerzel"]."</td>".
-                "<td>".$lehrerRow["Vorname"]."</td>".
-                "<td>".$lehrerRow["Nachname"]."</td>";
-            $lehrerTableRow = $lehrerTableRow."<td><input id='passwd' name='passwd' placeholder='Neues Passwort'/></td>";
-            $lehrerTableRow = $lehrerTableRow."<td><button type='submit' name='setPasswd' id='setPasswd' value='".$lehrerRow["Kuerzel"]."'>Set Passwort</button></td>";
-            $lehrerTableRow = $lehrerTableRow."<td><button type='submit' name='delTeacher' id='delTeacher' value='".$lehrerRow["Kuerzel"]."'>Löschen</button></td>";
-            $lehrerTableRow = $lehrerTableRow."</form></tr>";
-            echo $lehrerTableRow;
-        }
-    }
-    echo "</table>";
-?>
+                            echo "<table>";
+                            echo "<tr><td>Kürzel</td><td>Vorname</td><td>Nachname</td><td></td><td></td><td></td></tr>";
+                            if($lehrerResult->rowCount() > 0) {
+                                while($lehrerRow = $lehrerResult->fetch(PDO::FETCH_ASSOC)) {
+                                    $lehrerTableRow = "<tr><form method='post'><td>".$lehrerRow["Kuerzel"]."</td>".
+                                        "<td>".$lehrerRow["Vorname"]."</td>".
+                                        "<td>".$lehrerRow["Nachname"]."</td>";
+                                    $lehrerTableRow = $lehrerTableRow."<td><input id='passwd' name='passwd' placeholder='Neues Passwort'/></td>";
+                                    $lehrerTableRow = $lehrerTableRow."<td><button type='submit' name='setPasswd' id='setPasswd' value='".$lehrerRow["Kuerzel"]."'>Set Passwort</button></td>";
+                                    $lehrerTableRow = $lehrerTableRow."<td><button type='submit' name='delTeacher' id='delTeacher' value='".$lehrerRow["Kuerzel"]."'>Löschen</button></td>";
+                                    $lehrerTableRow = $lehrerTableRow."</form></tr>";
+                                    echo $lehrerTableRow;
+                                }
+                            }
+                            echo "</table>";
+                        ?>
 
-<form method="post">
-    <p id="teacherCreateStatus" name="teacherCreateStatus"></p>
-    <input type="text" id="firstNameNewTeacher" name="firstNameNewTeacher" placeholder="Vorname"/>
-    <input type="text" id="lastNameNewTeacher" name="lastNameNewTeacher" placeholder="Nachname"/>
-    <input type="password" id="passwdNewTeacher" name="passwdNewTeacher" placeholder="Passwort"/>
-    <button id="submitNewTeacher" name="submitNewTeacher" type="submit">Create</button>
-</form>
+                        <form method="post">
+                            <p id="teacherCreateStatus" name="teacherCreateStatus"></p>
+                            <input type="text" id="firstNameNewTeacher" name="firstNameNewTeacher" placeholder="Vorname"/>
+                            <input type="text" id="lastNameNewTeacher" name="lastNameNewTeacher" placeholder="Nachname"/>
+                            <input type="password" id="passwdNewTeacher" name="passwdNewTeacher" placeholder="Passwort"/>
+                            <button id="submitNewTeacher" name="submitNewTeacher" type="submit">Create</button>
+                        </form>
 
-<h1>Schulleitung</h1>
-<form method="post">
-    <select name="lehrerKuerzelPromote" id="lehrerKuerzelPromote">
-        <?php
-            $selectLehrerKuerzelQuery = "SELECT Kuerzel FROM Lehrer WHERE Kuerzel not in (SELECT Kuerzel FROM Schulleitung);";
-            $selectLehrerKuerzelResult = $conn->query($selectLehrerKuerzelQuery);
+                        <h2>Schulleitung</h2>
+                        <form method="post">
+                            <select name="lehrerKuerzelPromote" id="lehrerKuerzelPromote">
+                                <?php
+                                    $selectLehrerKuerzelQuery = "SELECT Kuerzel FROM Lehrer WHERE Kuerzel not in (SELECT Kuerzel FROM Schulleitung);";
+                                    $selectLehrerKuerzelResult = $conn->query($selectLehrerKuerzelQuery);
 
-            for ($index = 0; $selectLehrerKuerzelResult->rowCount() > $index; $index++) {
-                $row = $selectLehrerKuerzelResult->fetch(PDO::FETCH_ASSOC);
-                echo "<option value='" . $row["Kuerzel"] . "'>" . $row["Kuerzel"] . "</option>";
-            }
-        ?>
-    </select>
-    <input id="description" name="description" type="text" placeholder="Titel/Beschreibung"/>
-    <button id="promote" name="promote">Befördern</button>
-</form>
+                                    for ($index = 0; $selectLehrerKuerzelResult->rowCount() > $index; $index++) {
+                                        $row = $selectLehrerKuerzelResult->fetch(PDO::FETCH_ASSOC);
+                                        echo "<option value='" . $row["Kuerzel"] . "'>" . $row["Kuerzel"] . "</option>";
+                                    }
+                                ?>
+                            </select>
+                            <input id="description" name="description" type="text" placeholder="Titel/Beschreibung"/>
+                            <button id="promote" name="promote">Befördern</button>
+                        </form>
 
-<h1>AG</h1>
-<h2>Neue AG erstellen</h2>
-<p id="newAgStatus" name="newAgStatus"></p>
-<form method="post">
-    <input type="text" id="newAgName" name="newAgName" placeholder="AG Name"/>
-    <select id="newAgLeitungKuerzel" name="newAgLeitungKuerzel">
-        <?php
-            $teacherKuerzelQuery = "SELECT Kuerzel FROM Lehrer;";
-            $teacherKuerzelResult = $conn->query($teacherKuerzelQuery);
+                        <h2>AG</h2>
+                        <h3>Neue AG erstellen</h3>
+                        <p id="newAgStatus" name="newAgStatus"></p>
+                        <form method="post">
+                            <input type="text" id="newAgName" name="newAgName" placeholder="AG Name"/>
+                            <select id="newAgLeitungKuerzel" name="newAgLeitungKuerzel">
+                                <?php
+                                    $teacherKuerzelQuery = "SELECT Kuerzel FROM Lehrer;";
+                                    $teacherKuerzelResult = $conn->query($teacherKuerzelQuery);
 
-            for ($index = 0; $teacherKuerzelResult->rowCount() > $index; $index++) {
-                $row = $teacherKuerzelResult->fetch(PDO::FETCH_ASSOC);
-                echo "<option value='" . $row["Kuerzel"] . "'>" . $row["Kuerzel"] . "</option>";
-            }
-        ?>
-    </select>
-    <select id="newAgWochentag" name="newAgWochentag">
-        <option id="Montag" name="Montag">Montag</option>
-        <option id="Dienstag" name="Dienstag">Dienstag</option>
-        <option id="Mittwoch" name="Mittwoch">Mittwoch</option>
-        <option id="Donnerstag" name="Donnerstag">Donnerstag</option>
-        <option id="Freitag" name="Freitag">Freitag</option>
-    </select>
-    <input type="text" id="newAgRoom" name="newAgRoom" placeholder="Raum"/>
-    <input type="text" id="newAgDescription" name="newAgDescription" placeholder="Beschreibung"/>
-    <button type="submit" id="submitNewAg" name="submitNewAg">Erstellen</button>
-</form>
-<h2>AG löschen</h2>
-<form method="post">
-    <select id="deleteAgName" name="deleteAgName">
-        <?php
-            $deleteAgNameQuery = "SELECT Name FROM Ag;";
-            $deleteAgNameResult = $conn->query($deleteAgNameQuery);
+                                    for ($index = 0; $teacherKuerzelResult->rowCount() > $index; $index++) {
+                                        $row = $teacherKuerzelResult->fetch(PDO::FETCH_ASSOC);
+                                        echo "<option value='" . $row["Kuerzel"] . "'>" . $row["Kuerzel"] . "</option>";
+                                    }
+                                ?>
+                            </select>
+                            <select id="newAgWochentag" name="newAgWochentag">
+                                <option id="Montag" name="Montag">Montag</option>
+                                <option id="Dienstag" name="Dienstag">Dienstag</option>
+                                <option id="Mittwoch" name="Mittwoch">Mittwoch</option>
+                                <option id="Donnerstag" name="Donnerstag">Donnerstag</option>
+                                <option id="Freitag" name="Freitag">Freitag</option>
+                            </select>
+                            <input type="text" id="newAgRoom" name="newAgRoom" placeholder="Raum"/>
+                            <input type="text" id="newAgDescription" name="newAgDescription" placeholder="Beschreibung"/>
+                            <button type="submit" id="submitNewAg" name="submitNewAg">Erstellen</button>
+                        </form>
+                        <h3>AG löschen</h3>
+                        <form method="post">
+                            <select id="deleteAgName" name="deleteAgName">
+                                <?php
+                                    $deleteAgNameQuery = "SELECT Name FROM Ag;";
+                                    $deleteAgNameResult = $conn->query($deleteAgNameQuery);
 
-            for ($index = 0; $deleteAgNameResult->rowCount() > $index; $index++) {
-                $row = $deleteAgNameResult->fetch(PDO::FETCH_ASSOC);
-                echo "<option value='" . $row["Name"] . "'>" . $row["Name"] . "</option>";
-            }
-        ?>
-    </select>
-    <button type="submit" name="deleteAg" id="deleteAg">Löschen</button>
-</form>
+                                    for ($index = 0; $deleteAgNameResult->rowCount() > $index; $index++) {
+                                        $row = $deleteAgNameResult->fetch(PDO::FETCH_ASSOC);
+                                        echo "<option value='" . $row["Name"] . "'>" . $row["Name"] . "</option>";
+                                    }
+                                ?>
+                            </select>
+                            <button type="submit" name="deleteAg" id="deleteAg">Löschen</button>
+                        </form>
 
-<?php
-    $conn = null;
-?>
+                        <?php
+                            $conn = null;
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
