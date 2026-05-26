@@ -6,11 +6,11 @@
         $status = "";
         if ($username != "" and $userPassword != "") {
             require __DIR__ . "/../login/admin.php";
-            $query="SELECT PasswordHash FROM Admin WHERE Name='" . $username . "'";
-            $result = $conn->query($query);
-            if($result->rowCount()==1) {
-                $row = $result->fetch(PDO::FETCH_ASSOC);
-                if (password_verify($userPassword, $row["PasswordHash"])) {
+            $getPasswordHashStatement = $conn->prepare("SELECT PasswordHash FROM Admin WHERE Name = :name");
+            $getPasswordHashStatement->execute([':name' => $username]);
+            $getPasswordHashResult = $getPasswordHashStatement->fetchAll(PDO::FETCH_ASSOC);
+            if(count($getPasswordHashResult)==1) {
+                if (password_verify($userPassword, $getPasswordHashResult[0]["PasswordHash"])) {
                     $status = "document.getElementById('status').textContent='Angemeldet!';";
                     setcookie("adminLogin", $username, [
                         'expires' => time() + 3600,
