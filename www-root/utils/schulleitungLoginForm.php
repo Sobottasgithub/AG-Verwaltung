@@ -5,11 +5,11 @@
         $status = "";
         if ($kuerzel != "" and $userPassword != "") {
             require __DIR__ . "/../login/schulleitung.php";
-            $query="SELECT PasswordHash FROM Schulleitung LEFT JOIN LehrerLogin ON Schulleitung.Kuerzel=LehrerLogin.Kuerzel WHERE Schulleitung.Kuerzel='" . $kuerzel . "'";
-            $result = $conn->query($query);
-            if($result->rowCount()==1) {
-                $row = $result->fetch(PDO::FETCH_ASSOC);
-                if (password_verify($userPassword, $row["PasswordHash"])) {
+            $getPasswordHashStatement = $conn->prepare("SELECT PasswordHash FROM Schulleitung LEFT JOIN LehrerLogin ON Schulleitung.Kuerzel=LehrerLogin.Kuerzel WHERE Schulleitung.Kuerzel= :kuerzel");
+            $getPasswordHashStatement->execute([':kuerzel' => $kuerzel]);
+            $getPasswordHashResult = $getPasswordHashStatement->fetchAll(PDO::FETCH_ASSOC);
+            if(count($getPasswordHashResult)==1) {
+                if (password_verify($userPassword, $getPasswordHashResult[0]["PasswordHash"])) {
                     $status = "document.getElementById('status').textContent='Angemeldet!';";
                     setcookie("schulleitungLogin", $kuerzel, [
                         'expires' => time() + 3600,
