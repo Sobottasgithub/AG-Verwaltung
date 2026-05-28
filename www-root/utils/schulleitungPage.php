@@ -33,8 +33,11 @@
                         <h2>Arbeitsgemeinschaften</h2>
                         <?php
                             if (isset($_POST['submitAgGenehmigung'])) {
-                                $query = "UPDATE Ag SET FindetStatt=true WHERE Name='" . $_POST['submitAgGenehmigung'] . "'";
-                                $result = $conn->query($query);
+                                $agName = $_POST['submitAgGenehmigung'];
+                                $setFindetStattStatement = $conn->prepare("UPDATE Ag SET FindetStatt=true WHERE Name = :name");
+                                $setFindetStattStatement->execute([
+                                   ":name" => $agName
+                                ]);
                             }
 
                             $agDataQuery = "SELECT Name, Leitung, Raum, Wochentag, FindetStatt FROM Ag";
