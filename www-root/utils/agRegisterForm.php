@@ -43,10 +43,17 @@
             // The email isn't a factor for a unique student.
             
             // Is student already in AG?
-            $query="SELECT Schueler.SID FROM Schueler NATURAL JOIN Teilnahme WHERE
-                    Vorname='".$vorname."' AND Nachname='".$nachname."' AND Klasse='".$klasse."' AND AgName='".$ag."'";
-            $result = $conn->query($query);
-            if($result->rowCount() == 0) {
+            $isStudentAlreadyAssignedStatement = $conn->prepare("SELECT Schueler.SID FROM Schueler NATURAL JOIN Teilnahme WHERE
+                    Vorname= :vorname AND Nachname = :nachname AND Klasse = :klasse AND AgName = :ag");
+            $isStudentAlreadyAssignedStatement->execute([
+                ":vorname" => $vorname,
+                ":nachname" => $nachname,
+                ":klasse" => $klasse,
+                ":ag" => $ag
+            ]);
+            $isStudentAlreadyAssignedResult = $isStudentAlreadyAssignedStatement->fetchAll(PDO::FETCH_ASSOC);
+            
+            if(count($isStudentAlreadyAssignedResult) == 0) {
                 // Does student exist?
                 $sidStmt = getSid($vorname, $nachname, $klasse);
                 $sidRows = $sidStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -60,10 +67,9 @@
                         ":email" => $email,
                         ":klasse" => $klasse
                     ]);
-        
-                    // Fetch SID again
-                    $sidStmt = getSid($vorname, $nachname, $klasse);
                 }
+                // Fetch SID again
+                $sidStmt = getSid($vorname, $nachname, $klasse);
                 $sidRow = $sidStmt->fetch(PDO::FETCH_ASSOC);
 
                 $query="INSERT INTO Teilnahme (AGName, SID) VALUES (:ag, :sid)";
