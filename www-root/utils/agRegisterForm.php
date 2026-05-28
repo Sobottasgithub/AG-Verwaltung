@@ -1,4 +1,16 @@
 <?php
+    function getSid($vorname, $nachname, $klasse) {
+        require __DIR__ . "/../login/defaultUser.php";
+        $getSidStatement = $conn->prepare("SELECT SID FROM Schueler WHERE Vorname=:vorname AND Nachname=:nachname AND Klasse=:klasse");
+        $getSidStatement->execute([
+            ":vorname" => $vorname,
+            ":nachname" => $nachname,
+            ":klasse" => $klasse
+        ]);
+
+        return $getSidStatement; 
+    }
+
     // Set to "" here to allow to be used as input value before submit has been pressed
     $vorname = "";
     $nachname = "";
@@ -36,10 +48,9 @@
             $result = $conn->query($query);
             if($result->rowCount() == 0) {
                 // Does student exist?
-                $query="SELECT SID FROM Schueler WHERE Vorname='".$vorname."' AND Nachname='".$nachname."' AND Klasse='".$klasse."'";
-                $result = $conn->query($query);
-                
-                if ($result->rowCount() == 0) {
+                $sidStmt = getSid($vorname, $nachname, $klasse);
+                $sidRows = $sidStmt->fetchAll(PDO::FETCH_ASSOC);
+                if (count($sidRows) == 0) {
                     // Create student
                     $query="INSERT INTO Schueler (Vorname, Nachname, Email, Klasse) VALUES (:vorname, :nachname, :email, :klasse)";
                     $result = $conn->prepare($query);
@@ -51,16 +62,15 @@
                     ]);
         
                     // Fetch SID again
-                    $query="SELECT SID FROM Schueler WHERE Vorname='".$vorname."' AND Nachname='".$nachname."' AND Klasse='".$klasse."'";
-                    $result = $conn->query($query);
+                    $sidStmt = getSid($vorname, $nachname, $klasse);
                 }
+                $sidRow = $sidStmt->fetch(PDO::FETCH_ASSOC);
 
-                $row = $result->fetch(PDO::FETCH_ASSOC);
                 $query="INSERT INTO Teilnahme (AGName, SID) VALUES (:ag, :sid)";
                 $result = $conn->prepare($query);
                 $result->execute([
                     ":ag" => $ag,
-                    ":sid" => $row["SID"]
+                    ":sid" => $sidRow["SID"]
                 ]);
                 echo "document.getElementById('status').textContent='Du wurdest bei der " . $ag . " AG angemeldet!';";
             } else {
