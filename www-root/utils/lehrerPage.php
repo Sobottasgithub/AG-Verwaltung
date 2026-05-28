@@ -7,11 +7,12 @@
 
     if (isset($_POST["genehmigen"])) {
         $sid = $_POST["genehmigen"];
-        $query = "UPDATE Teilnahme SET genehmigt=true WHERE SID='" . $sid . "'";
-        $result = $conn->query($query);
-
+        $setGenehmigtStatement = $conn->prepare("UPDATE Teilnahme SET genehmigt=true WHERE SID = :sid");
+        $setGenehmigtStatement->execute([
+            ":sid" => $sid   
+        ]);
+        
         $conn = null;
-
         require __DIR__ . "/autoAcceptAg.php";
     }
 ?>

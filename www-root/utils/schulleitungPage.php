@@ -2,6 +2,7 @@
     if (!isset($_COOKIE["schulleitungLogin"])) {
         header('Location: /utils/schulleitung.php');
     }
+    require __DIR__ . "/autoAcceptAg.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
