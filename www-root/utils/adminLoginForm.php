@@ -1,4 +1,6 @@
 <?php
+    $username = "";
+    $userPassword = "";
     if (isset($_POST['submitLogin'])) {
         $username = $_POST['username'];
         $userPassword = $_POST['password'];
@@ -36,10 +38,11 @@
                   document.getElementById('status').textContent='Bitte fülle alle Pflichtfelder aus!';";
         }
         if ($userPassword == "") {
-            echo "document.getElementById('username').style.backgroundColor = 'red';
+            echo "document.getElementById('password').style.backgroundColor = 'red';
                   document.getElementById('status').textContent='Bitte fülle alle Pflichtfelder aus!';";
         }
-
+        echo "document.getElementById('username').value = '" . $username . "';
+              document.getElementById('password').value = '" . $userPassword . "';";
         echo "});</script>";
     }
 ?>
