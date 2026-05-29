@@ -21,6 +21,7 @@
               include "utils/agDisplay.php";
           ?>
         </div>
+        <span class="center">Für mehr Infos klicke: <a href="https://www.goethe-bensheim.de/index.php/unterricht/arbeitsgemeinschaften"> hier </a></span>
         <br/>
         <h2 class="center">Anmelden</h2>
         <span class="center">Melde dich für eine Ag an!</span>
