@@ -1,4 +1,6 @@
 <?php
+    $kuerzel = "";
+    $userPassword = "";
     if (isset($_POST['submitSchulleitungLogin'])) {
         $kuerzel = $_POST['schulleitungKuerzel'];
         $userPassword = $_POST['schulleitungPassword'];
@@ -31,14 +33,15 @@
             document.addEventListener('DOMContentLoaded', function() {";
         echo $status;
         if ($kuerzel == "") {
-            echo "document.getElementById('kuerzel').style.backgroundColor = 'red';
+            echo "document.getElementById('schulleitungKuerzel').style.backgroundColor = 'red';
                   document.getElementById('status').textContent='Bitte fülle alle Pflichtfelder aus!';";
         }
         if ($userPassword == "") {
-            echo "document.getElementById('password').style.backgroundColor = 'red';
+            echo "document.getElementById('schulleitungPassword').style.backgroundColor = 'red';
                   document.getElementById('status').textContent='Bitte fülle alle Pflichtfelder aus!';";
         }
-
+        echo "document.getElementById('schulleitungKuerzel').value = '" . $kuerzel . "';
+              document.getElementById('schulleitungPassword').value = '" . $userPassword . "';";
         echo "});</script>";
     }
 ?>
