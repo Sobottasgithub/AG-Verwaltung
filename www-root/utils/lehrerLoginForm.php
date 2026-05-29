@@ -1,4 +1,6 @@
 <?php
+    $kuerzel = "";
+    $userPassword = "";
     if (isset($_POST['submitLogin'])) {
         $kuerzel = $_POST['kuerzel'];
         $userPassword = $_POST['password'];
@@ -26,6 +28,7 @@
             } else {
                 $status = "document.getElementById('status').textContent='Falsches Kürzel oder Passwort!';"; 
             }
+
             $conn=null;
         }
         echo "<script type='text/javascript'>
@@ -39,6 +42,8 @@
             echo "document.getElementById('password').style.backgroundColor = 'red';
                   document.getElementById('status').textContent='Bitte fülle alle Pflichtfelder aus!';";
         }
+        echo "document.getElementById('kuerzel').value = '" . $kuerzel . "';
+          document.getElementById('password').value = '" . $userPassword . "';";
 
         echo "});</script>";
     }
