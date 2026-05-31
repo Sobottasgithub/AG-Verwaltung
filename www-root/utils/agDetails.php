@@ -29,20 +29,22 @@
                                 $count = $teilnehmerCountStatement->fetch(PDO::FETCH_ASSOC); 
 
                                 $row = $getAgStatement->fetch(PDO::FETCH_ASSOC);
-                                echo "<h1>" . $row["Name"] . "</h1>";
-                                echo "<table>";
-                                echo "<tr><th>Vorname</th><th>Nachname</th><th>Leitung</th><th>Raum</th><th>Wochentag</th><th>Uhrzeit</th><th>Teilnehmer</th></tr>";
-                                echo "<tr>";
-                                echo "<td>" . $row["Vorname"] . "</td>";
-                                echo "<td>" . $row["Nachname"] . "</td>";
-                                echo "<td>" . $row["Leitung"] . "</td>";
-                                echo "<td>" . $row["Raum"] . "</td>";
-                                echo "<td>" . $row["Wochentag"] . "</td>";
-                                echo "<td>" . $row["Uhrzeit"] . "</td>";
-                                echo "<td>" . $count["count"] . "</td>";
-                                echo "</tr>";
-                                echo "</table><br>";
-                                echo "<p>" . $row["Beschreibung"] . "</p>";
+                                
+                                $html = "<h1>" . $row["Name"] . "</h1>";
+                                $html = $html . "<table>";
+                                $html = $html . "<tr><th>Vorname</th><th>Nachname</th><th>Leitung</th><th>Raum</th><th>Wochentag</th><th>Uhrzeit</th><th>Teilnehmer</th></tr>";
+                                $html = $html . "<tr>";
+                                $html = $html . "<td>" . $row["Vorname"] . "</td>";
+                                $html = $html . "<td>" . $row["Nachname"] . "</td>";
+                                $html = $html . "<td>" . $row["Leitung"] . "</td>";
+                                $html = $html . "<td>" . $row["Raum"] . "</td>";
+                                $html = $html . "<td>" . $row["Wochentag"] . "</td>";
+                                $html = $html . "<td>" . $row["Uhrzeit"] . "</td>";
+                                $html = $html . "<td>" . $count["count"] . "</td>";
+                                $html = $html . "</tr>";
+                                $html = $html . "</table><br>";
+                                $html = $html . "<p>" . $row["Beschreibung"] . "</p>";
+                                echo $html;
                                 
                                 $conn = null;
                             } else {
