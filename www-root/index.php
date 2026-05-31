@@ -12,6 +12,7 @@
       <li><a href="/utils/lehrer.php" class="active">Lehrer</a></li>
       <li><a href="/utils/schulleitung.php">Schulleitung</a></li>
       <li><a href="/utils/admin.php">Admin</a></li>
+      <li><a href="/utils/impressum.php">Impressum</a></li>
     </ul>
     <div class="center">
       <div class="pageBody">
