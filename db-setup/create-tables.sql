@@ -33,7 +33,8 @@ CREATE TABLE Ag (
     Raum varchar(6),
     Wochentag varchar(12),
     FindetStatt boolean,
-    Beschreibung varchar(1024)
+    Beschreibung varchar(1024),
+    Uhrzeit varchar(6)
 );
 
 CREATE TABLE Teilnahme (

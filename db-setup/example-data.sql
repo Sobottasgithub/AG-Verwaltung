@@ -28,9 +28,9 @@ INSERT INTO Lehrer (Kuerzel, Nachname, Vorname) VALUES
 
 INSERT INTO Schulleitung (Kuerzel, Bezeichnung) VALUES ("CAKM", "Schulleiter");
 
-INSERT INTO Ag (Name, Leitung, Raum, Wochentag, FindetStatt, Beschreibung) VALUES
-("Informatik", "CAKM", "OG112", "Dienstag", false, "Hier lernt ihr viel über Informatik!"),
-("Sport", "POEP", "TUH2", "Mittwoch", false, "Bewegt euch!");
+INSERT INTO Ag (Name, Leitung, Raum, Wochentag, FindetStatt, Beschreibung, Uhrzeit) VALUES
+("Informatik", "CAKM", "OG112", "Dienstag", false, "Hier lernt ihr viel über Informatik!", "14:00"),
+("Sport", "POEP", "TUH2", "Mittwoch", false, "Bewegt euch!", "14:30");
 
 INSERT INTO LehrerLogin (Kuerzel, PasswordHash) VALUES ("CAKM", "$argon2id$v=19$m=131072,t=4,p=2$Li9aanV2SmFBZHdaMTRDSQ$iLEyLYc7kUcvnwszXzECLWa+RTIsSjTYzrdsBGCOj4A");
 INSERT INTO Admin (Name, PasswordHash) VALUES ("Admin", "$argon2id$v=19$m=131072,t=4,p=2$Li9aanV2SmFBZHdaMTRDSQ$iLEyLYc7kUcvnwszXzECLWa+RTIsSjTYzrdsBGCOj4A");

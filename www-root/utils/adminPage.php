@@ -138,15 +138,16 @@
         $newAgDescription = $_POST["newAgDescription"];
         $newAgLeitungKuerzel = $_POST["newAgLeitungKuerzel"];
         $newAgWochentag = $_POST["newAgWochentag"];
-
+        $newTime = $_POST["newTime"];
+            
         echo "<script type='text/javascript'>
             document.addEventListener('DOMContentLoaded', function() {";
-        if ($newAgName != "" && $newAgRoom != "" && $newAgDescription != "") {
+        if ($newAgName != "" && $newAgRoom != "" && $newAgDescription != "" && $newTime != "") {
             $selectAgWithSameNameQuery = "SELECT * FROM Ag WHERE Name='".$newAgName."';";
             $selectAgWithSameNameResult = $conn->query($selectAgWithSameNameQuery);
 
             if ($selectAgWithSameNameResult->rowCount() == 0) {
-                $selectAgWithSameNameQuery = "INSERT INTO Ag (Name, Leitung, Raum, Wochentag, FindetStatt, Beschreibung) VALUES ('".$newAgName."', '".$newAgLeitungKuerzel."', '".$newAgRoom."', '".$newAgWochentag."', false, '".$newAgDescription."');";
+                $selectAgWithSameNameQuery = "INSERT INTO Ag (Name, Leitung, Raum, Wochentag, FindetStatt, Beschreibung, Uhrzeit) VALUES ('".$newAgName."', '".$newAgLeitungKuerzel."', '".$newAgRoom."', '".$newAgWochentag."', false, '".$newAgDescription."', '".$newTime."');";
                 $selectAgWithSameNameResult = $conn->query($selectAgWithSameNameQuery);
 
                 echo "document.getElementById('newAgStatus').textContent='Neue Ag erstellt!';";
@@ -162,6 +163,9 @@
             }
             if ($newAgDescription == "") {
                 echo "document.getElementById('newAgDescription').style.backgroundColor = 'red';";
+            }
+            if ($newTime == "") {
+                echo "document.getElementById('newTime').style.background = 'red';";
             }
         }
         echo "});</script>";
@@ -296,6 +300,7 @@
                                 <option id="Donnerstag" name="Donnerstag">Donnerstag</option>
                                 <option id="Freitag" name="Freitag">Freitag</option>
                             </select>
+                            <input type="time" id="newTime" name="newTime"/>
                             <input type="text" id="newAgRoom" name="newAgRoom" placeholder="Raum"/>
                             <input type="text" id="newAgDescription" name="newAgDescription" placeholder="Beschreibung"/>
                             <button type="submit" id="submitNewAg" name="submitNewAg">Erstellen</button>
