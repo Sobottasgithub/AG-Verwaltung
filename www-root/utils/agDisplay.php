@@ -1,12 +1,12 @@
 <?php
     require __DIR__ . "/../login/defaultUser.php";
 
-    $query = "SELECT Name, Vorname, Nachname, Leitung, Raum, Wochentag FROM Ag JOIN Lehrer ON Ag.Leitung = Lehrer.Kuerzel";
+    $query = "SELECT Name, Vorname, Nachname, Leitung, Raum, Wochentag, Uhrzeit FROM Ag JOIN Lehrer ON Ag.Leitung = Lehrer.Kuerzel";
     $result = $conn->query($query);
 
     echo "<form action='/utils/agDetails.php' method='post'>";
     echo "<table>";
-    echo "<tr><th>AG</th><th>Lehrkraft</th><th>Kürzel</th><th>Raum</th><th>Wochentag</th></tr>";
+    echo "<tr><th>AG</th><th>Lehrkraft</th><th>Kürzel</th><th>Raum</th><th>Wochentag</th><th>Uhrzeit</th></tr>";
     if ($result->rowCount() > 0) {
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             echo "<tr>";
@@ -15,6 +15,7 @@
             echo "<td>" . $row["Leitung"] . "</td>";
             echo "<td>" . $row["Raum"] . "</td>";
             echo "<td>" . $row["Wochentag"] . "</td>";
+            echo "<td>" . $row["Uhrzeit"] . "</td>";
             echo "</tr>";
         }
     }

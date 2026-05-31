@@ -19,7 +19,7 @@
                                 require __DIR__ . "/../login/defaultUser.php";
 
                                 $agName = $_POST['agName'];
-                                $getAgStatement = $conn->prepare("SELECT Name, Vorname, Nachname, Leitung, Raum, Wochentag, Beschreibung
+                                $getAgStatement = $conn->prepare("SELECT Name, Vorname, Nachname, Leitung, Raum, Wochentag, Beschreibung, Uhrzeit
                                          FROM Ag JOIN Lehrer ON Ag.Leitung = Lehrer.Kuerzel WHERE Name = :name");
                                 $getAgStatement->execute([':name' => $agName]);
 
@@ -31,13 +31,14 @@
                                 $row = $getAgStatement->fetch(PDO::FETCH_ASSOC);
                                 echo "<h1>" . $row["Name"] . "</h1>";
                                 echo "<table>";
-                                echo "<tr><td>Vorname</td><td>Nachname</td><td>Leitung</td><td>Raum</td><td>Wochentag</td><td>Teilnehmer</td></tr>";
+                                echo "<tr><th>Vorname</th><th>Nachname</th><th>Leitung</th><th>Raum</th><th>Wochentag</th><th>Uhrzeit</th><th>Teilnehmer</th></tr>";
                                 echo "<tr>";
                                 echo "<td>" . $row["Vorname"] . "</td>";
                                 echo "<td>" . $row["Nachname"] . "</td>";
                                 echo "<td>" . $row["Leitung"] . "</td>";
                                 echo "<td>" . $row["Raum"] . "</td>";
                                 echo "<td>" . $row["Wochentag"] . "</td>";
+                                echo "<td>" . $row["Uhrzeit"] . "</td>";
                                 echo "<td>" . $count["count"] . "</td>";
                                 echo "</tr>";
                                 echo "</table><br>";
